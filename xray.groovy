@@ -34,7 +34,7 @@ pipeline {
         stage('Uploading Newman reports to Xray JIRA'){
             steps{
                 sh "pwd"
-                sh "curl -H 'Content-Type: text/xml' -X POST -H 'Authorization': ${token}' --data @postman_xray_junitfull.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ"
+                sh '''curl -H 'Content-Type: text/xml' -X POST -H "Authorization': token" --data @postman_xray_junitfull.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ'''
             }
         }
         
