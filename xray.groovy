@@ -28,7 +28,8 @@ pipeline {
         stage('Running Postman API Collection via Newman'){
             steps{
                 sh "pwd"
-                sh "newman run /home/anshuman-slathia/newman/POC_google.json -r 'cli,junitfull,junitxray' --reporter-junitfull-export postman_xray_junitfull.xml --reporter-junitxray-export postman_xray_junitxray.xml -n 1"
+                git branch: 'main', credentialsId: '04bab23d-6247-42cd-a135-155a3e34f5b9', url: 'https://github.com/anshuman0053/postman-newman.git'
+                sh "newman run POC_google.json -r 'cli,junitfull,junitxray' --reporter-junitfull-export postman_xray_junitfull.xml --reporter-junitxray-export postman_xray_junitxray.xml -n 1"
             }
         }
         stage('Uploading Newman reports to Xray JIRA'){
