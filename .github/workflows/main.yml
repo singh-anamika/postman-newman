@@ -59,14 +59,15 @@ jobs:
         run: |
           python -m pip install requests
 
-      - name: Run Python Script
+      - name: get_token_value
         run: python postman_upload.py
+        id: get_token_value
         
       - name: Use Token in Curl Command
         env:
             TOKEN: ${{ secrets.TOKEN }}
         run: |
-          curl -H 'Content-Type: text/xml' -X POST -H "Authorization': ${TOKEN}" --data @junit-report.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
+          curl -H 'Content-Type: text/xml' -X POST -H "Authorization': ${{ steps.get_token_value.outputs.stdout }}" --data @junit-report.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
         
         
     
