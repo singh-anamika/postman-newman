@@ -77,7 +77,7 @@ jobs:
         
       - name: Upload results to Xray
         run: |
-            curl -H "Content-Type: text/xml" -H "Authorization: ${{ env.TOKEN }}" --data @/home/runner/work/postman-newman/postman-newman/junit-report.xml "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ"
+            curl -H "Content-Type: text/xml" -H "Authorization: Bearer ${{ env.TOKEN }}" --data @/home/runner/work/postman-newman/postman-newman/junit-report.xml "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ"
 
       
       
