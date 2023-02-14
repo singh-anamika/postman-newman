@@ -45,6 +45,10 @@ jobs:
       with:
         name: junit-report
         path: junit-report.xml
+    - name: Check directory
+      run: |
+          pwd
+          ls
 
 
       
