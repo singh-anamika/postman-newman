@@ -1,4 +1,6 @@
-
+import sys
+sys.path.append('./requests-master')
+import requests
 import os
 import json
 
