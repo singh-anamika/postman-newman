@@ -1,0 +1,39 @@
+name: Multi-Job Action
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Install Newman
+      run: npm install -g newman
+
+    - name: Run Newman
+      run: newman run CVC_Apis.postman_collection.json
+      
+  job2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Run Python Script
+        run: python3 postman_upload.py
+    
