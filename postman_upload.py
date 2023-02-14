@@ -8,6 +8,6 @@ response = requests.post('https://xray.cloud.getxray.app/api/v2/authenticate', d
 parsed_auth = response.json()
 token = 'Bearer {}'.format(parsed_auth)
 print(token)
-
+os.environ['TOKEN'] = token
 
 
