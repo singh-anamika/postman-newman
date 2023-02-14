@@ -29,7 +29,10 @@ jobs:
         node-version: '14.x'
 
     - name: Install Newman
-      run: npm install -g newman
+      run: |
+        npm install -g newman
+        npm install -g newman-reporter-junitfull
+        npm install -g newman-reporter-junitxray
 
     - name: Run Newman
       run: newman run CVC_Apis.postman_collection.json -r 'cli,junitfull,junitxray' --reporter-junitfull-export cvc_junitfull.xml
