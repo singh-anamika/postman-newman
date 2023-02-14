@@ -9,5 +9,7 @@ parsed_auth = response.json()
 token = 'Bearer {}'.format(parsed_auth)
 print(token)
 os.environ['TOKEN'] = token
+print(token)
+
 
 
