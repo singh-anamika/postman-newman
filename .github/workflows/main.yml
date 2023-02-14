@@ -73,6 +73,7 @@ jobs:
       - name: Get Xray token from Python script
         run: |
             export XRAY_TOKEN=$(python3 postman_upload.py)
+            echo "Token: $XRAY_TOKEN"
       
       - name: Import test results to Xray
         run: |
