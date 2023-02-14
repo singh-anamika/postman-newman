@@ -32,7 +32,14 @@ jobs:
       run: npm install -g newman
 
     - name: Run Newman
-      run: newman run CVC_Apis.postman_collection.json
+      run: newman run CVC_Apis.postman_collection.json -r 'cli,junitfull,junitxray' --reporter-junitfull-export postman_cvc_junitfull.xml --reporter-junitxray-export postman_cvc_junitxray.xml -n 1
+      
+    - name: Upload report as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: newman-report
+        path: reports/postman_cvc_junitfull.xml
+
       
   job3:
     runs-on: ubuntu-latest
@@ -51,7 +58,7 @@ jobs:
         env:
             TOKEN: ${{ secrets.TOKEN }}
         run: |
-          curl -H 'Content-Type: text/xml' -X POST -H "Authorization': ${TOKEN}" --data @postman_xray_junitfull.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
+          curl -H 'Content-Type: text/xml' -X POST -H "Authorization': ${TOKEN}" --data @${{ github.workspace }}/reports/postman_cvc_junitfull.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
         
         
     
