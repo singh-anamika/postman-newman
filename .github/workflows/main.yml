@@ -50,11 +50,6 @@ jobs:
         name: junit-report
         path: /home/runner/work/postman-newman/postman-newman/junit-report.xml
         
-    - name: Download report artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: junit-report
-        path: /home/runner/work/postman-newman/postman-newman/junit-report.xml
         
         
   job3:
@@ -67,11 +62,21 @@ jobs:
       - name: Install Requests Module
         run: |
           python -m pip install requests
+          
+          
+      - name: Download report artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: junit-report
+          path: /home/runner/work/postman-newman/postman-newman/junit-report.xml    
+      
 
       - name: get token
         run: python postman_upload.py
         env:
           TOKEN: ${{ secrets.TOKEN }}
+          
+      
         
       - name: Use Token in Curl Command
         
