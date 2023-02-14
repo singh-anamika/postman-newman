@@ -46,4 +46,12 @@ jobs:
 
       - name: Run Python Script
         run: python postman_upload.py
+        
+      - name: Use Token in Curl Command
+      - env:
+            TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          curl -H 'Content-Type: text/xml' -X POST -H "Authorization': ${TOKEN}" --data @postman_xray_junitfull.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
+        
+        
     
