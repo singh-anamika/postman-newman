@@ -32,7 +32,7 @@ jobs:
       run: npm install -g newman
 
     - name: Run Newman
-      run: newman run CVC_Apis.postman_collection.json -r 'cli,junitfull,junitxray' --reporter-junitfull-export postman_cvc_junitfull.xml --reporter-junitxray-export postman_cvc_junitxray.xml -n 1
+      run: newman run CVC_Apis.postman_collection.json -r 'cli,junitfull,junitxray' --reporter-junitfull-export postman_cvc_junitfull.xml
       
     - name: Upload report as artifact
       uses: actions/upload-artifact@v2
