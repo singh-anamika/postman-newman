@@ -74,7 +74,7 @@ jobs:
       - name: Get Token
         id: get_token
         run: |
-          token=$(postman_upload.py)
+          token=$(python3 postman_upload.py)
           echo "::set-output name=token::$token"
 
       
