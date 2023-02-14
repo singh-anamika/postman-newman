@@ -76,6 +76,10 @@ jobs:
         env:
           TOKEN: ${{ secrets.TOKEN }}
       
+      - name: print token
+        run: echo '${TOKEN}'
+        
+      
         
       - name: Use Token in Curl Command
         
