@@ -79,10 +79,11 @@ jobs:
 
       
         
-      - name: Use Token in Curl Command
-        
+      - name: Upload results to Xray
+        env:
+          TOKEN: ${{ steps.get-token.outputs.token }}
         run: |
-          curl --verbose -H 'Content-Type: text/xml' -X POST -H "Authorization: Bearer $token" --data @/home/runner/work/postman-newman/postman-newman/junit-report.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
+          curl --verbose -H 'Content-Type: text/xml' -X POST -H "Authorization: Bearer $TOKEN" --data @/home/runner/work/postman-newman/postman-newman/junit-report.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
       - name: Check directory
         run: |
             pwd
