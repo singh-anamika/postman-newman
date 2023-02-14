@@ -47,7 +47,7 @@ jobs:
       - name: Run Python Script
         run: python postman_upload.py
         
-      - name: Use Token in Curl Command
+      - name: Use Token in Curl Commands
       - env:
             TOKEN: ${{ secrets.TOKEN }}
         run: |
