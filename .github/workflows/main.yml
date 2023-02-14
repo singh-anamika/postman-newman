@@ -36,7 +36,7 @@ jobs:
 
     - name: Run Newman
       id: newman
-      run: newman run CVC_Apis.postman_collection.json -r junitfull --reporter-junitfull-export result.xml || echo "::set-output name=failed::true"
+      run: newman run CVC_Apis.postman_collection.json --reporters junitfull --reporter-junitfull-export junit-report.xml || echo "::set-output name=failed::true"
       continue-on-error: true
       
     - name: Upload JUnit report
@@ -44,7 +44,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: junit-report
-        path: result.xml
+        path: junit-report.xml
 
 
       
@@ -66,7 +66,7 @@ jobs:
         env:
             TOKEN: ${{ secrets.TOKEN }}
         run: |
-          curl -H 'Content-Type: text/xml' -X POST -H "Authorization': ${TOKEN}" --data @result.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
+          curl -H 'Content-Type: text/xml' -X POST -H "Authorization': ${TOKEN}" --data @junit-report.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
         
         
     
