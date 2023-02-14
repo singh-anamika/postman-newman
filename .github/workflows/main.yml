@@ -71,22 +71,20 @@ jobs:
           path: /home/runner/work/postman-newman/postman-newman/junit-report.xml    
       
 
-      - name: Get Token
-        id: get_token
+      - name: Fetch token from Python script
         run: |
-          token=$(python3 postman_upload.py)
-          echo "::set-output name=token::$token"
-          
-      - name: print token
-        run: echo '$token'
-
+            token=$(python3 postman_upload.py)
+            echo $token
+        env:
+            XRAY_TOKEN: ${{ secrets.XRAY_TOKEN }}
       
         
       - name: Upload results to Xray
-        env:
-          TOKEN: ${{ steps.get-token.outputs.token }}
         run: |
-          curl --verbose -H 'Content-Type: text/xml' -X POST -H "Authorization: Bearer $TOKEN" --data @/home/runner/work/postman-newman/postman-newman/junit-report.xml https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ
+            curl -H "Content-Type: text/xml" -H "Authorization: Bearer $token" --data @/home/runner/work/postman-newman/postman-newman/junit-report.xml "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=CQ"
+        env:
+          token: ${{ steps.fetch_token.outputs.token }}
+          
       - name: Check directory
         run: |
             pwd
