@@ -1,6 +1,6 @@
 
 def func (a,b):
-    sum = a+b
+    sum = a+b+C
     print(sum)
     return sum
 
