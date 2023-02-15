@@ -43,7 +43,7 @@ jobs:
           ls
       
     - name: Upload JUnit report
-#       if: steps.newman.outputs.failed == 'true'
+      if: steps.newman.outputs.failed == 'true'
       uses: actions/upload-artifact@v2
       with:
         name: junit-report
