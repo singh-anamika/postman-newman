@@ -36,18 +36,19 @@ jobs:
 
     - name: Run Newman
       id: newman
-      run: newman run CVC_Apis.postman_collection.json -r 'cli,junitfull,junitxray' --reporter-junitfull-export postman_cvc_junitfull.xml --reporter-junitxray-export postman_google_cvc.xml -n 1 
+      run: newman run CVC_Apis.postman_collection.json --reporters junitfull --reporter-junitfull-export cvc-report.xml
+ 
     - name: Check directory
       run: |
           pwd
           ls
       
-    - name: Upload JUnit report
-      if: steps.newman.outputs.failed == 'true'
+    - name: Upload Newman JUnit report
+#       if: steps.newman.outputs.failed == 'true'
       uses: actions/upload-artifact@v2
       with:
-        name: junit-report
-        path: /home/runner/work/postman-newman/postman-newman/postman_google_cvc.xml
+        name: newman-report
+        path: cvc-report.xml
         
         
         
@@ -69,14 +70,7 @@ jobs:
             
           
           
-      - name: Download report artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: junit-report
-          path: /home/runner/work/postman-newman/postman-newman/postman_google_cvc.xml  
-      
-      
-
+     
 
       
  
