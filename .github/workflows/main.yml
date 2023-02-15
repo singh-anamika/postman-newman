@@ -33,6 +33,11 @@ jobs:
         npm install -g newman
         npm install -g newman-reporter-junitfull
         npm install -g newman-reporter-junitxray
+        npm install -g newman-reporter-cli
+        
+        
+    - name: Run API tests
+      run: newman run CVC_Apis.postman_collection.json --reporters cli
 
     - name: Run Newman
       id: newman
