@@ -35,7 +35,7 @@ pipeline {
             steps{
                 git branch: 'main', credentialsId: '04bab23d-6247-42cd-a135-155a3e34f5b9', url: 'https://github.com/anshuman0053/postman-newman.git'
                 script{
-                        def newman_aut = sh(script: "parallel-execution-newman.py", returnStdout: true).trim()
+                        def newman_aut = sh(script: "python3 parallel-execution-newman.py", returnStdout: true).trim()
                         
                 }
                   
