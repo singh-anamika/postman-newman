@@ -7,7 +7,7 @@ with open('CVC_Apis.postman_collection.json', 'r') as f:
 
 random.shuffle(collection['item'])
 
-chunks = [collection['item'][i:i+10] for i in range(0, len(collection['item']), 10)]
+chunks = [collection['item'][i:i+10] for i in range(0, len(collection['item']), 5)]
 
 for i, chunk in enumerate(chunks):
     command = f"newman run CVC_Apis.postman_collection.json --env-var concurrency={len(chunk)} --reporters cli,junit --reporter-junit-export report.xml"
