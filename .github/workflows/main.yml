@@ -1,18 +1,14 @@
 name: Multi-Job Action
 
 on:
-  repository_dispatch:
-   types: run_api_automation
-
-  
-      
+  push:
+    branches:
+      - main
 
 jobs:
   
-  api_automation:
+  job1:
     runs-on: ubuntu-latest
-    outputs:
-      job_status: ${{ steps.set_status.outputs.job_status }}
 
     steps:
       - uses: actions/checkout@v2
@@ -20,35 +16,67 @@ jobs:
       - name: Install Python Packages
         run: pip install requests
   
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
+  
+  job2:
+    runs-on: ubuntu-latest
 
-      - name: Install Newman
-        run: |
-          npm install -g newman
-          npm install -g newman-reporter-junitfull
-          npm install -g newman-reporter-junitxray
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
+
+    - name: Install Newman
+      run: |
+        npm install -g newman
+        npm install -g newman-reporter-junitfull
+        npm install -g newman-reporter-junitxray
         
-      - name: Run API tests via Newman
-        id: newman
-        run: newman run CVC_Apis.postman_collection.json  --reporters cli,junitfull --reporter-junitfull-export cvc-report.xml 
+        
+    - name: Run API tests
+      run: newman run CVC_Apis.postman_collection.json || true
+    - name: Generate API tests report
+      id: newman
+      run: newman run CVC_Apis.postman_collection.json --reporters junitfull --reporter-junitfull-export cvc-report.xml || true
 
-      - name: Upload Newman JUnit report
-        continue-on-error: true
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: newman-report
-          path: cvc-report.xml
-          
-      - name: Set job status
-        id: set_status
-        if: ${{ always() }}
+ 
+    - name: Check directory
+      run: |
+          pwd
+          ls
+      
+    - name: Upload Newman JUnit report
+      uses: actions/upload-artifact@v2
+      with:
+        name: newman-report
+        path: cvc-report.xml
+        
+        
+        
+  job3:
+    runs-on: ubuntu-latest
+    needs: job2
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Requests Module
         run: |
-          if [ "${{ steps.newman.outcome }}" == "success" ]; then
-            echo "::set-output name=job_status::success"
-          else
-            echo "::set-output name=job_status::failed"
-          fi
+          python -m pip install requests
+          
+      - name: check directory
+        run: |
+              pwd
+              ls
+            
+          
+          
+     
+
+      
+ 
+        
+        
+    
