@@ -3,7 +3,7 @@ pipeline {
   
     parameters{
 
-         string(defaultValue: 'upload-result-on-env', description: '', name: 'BRANCH', trim: true)
+         string(defaultValue: 'main', description: '', name: 'BRANCH', trim: true)
          string(defaultValue: 'https://api.postman.com/collections/18481634-926bcc97-e8db-4354-ac57-e293cd106587?access_key=PMAT-01GV2Y8JN6HSKEW0PRMRKK8GVA', description: '', name: 'COLLECTION_URL', trim: true)
         
                              
