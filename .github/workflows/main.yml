@@ -39,7 +39,7 @@ jobs:
       run: newman run CVC_Apis.postman_collection.json || true
     - name: Generate API tests report
       id: newman
-      run: newman run CVC_Apis.postman_collection.json --reporters junitfull --reporter-junitfull-export cvc-report.xml || true
+      run: newman run CVC_Apis.postman_collection.json --reporters cli,junitfull --reporter-junitfull-export cvc-report.xml || true
 
  
     - name: Check directory
